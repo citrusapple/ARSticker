@@ -1,5 +1,5 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
+//import javascriptLogo from './javascript.svg'
 import * as THREE from "three";
 import { ARButton } from 'three/examples/jsm/Addons.js';
 
@@ -32,7 +32,7 @@ async function init() {
     console.log(imgMarkerPuffBitmap);
 
     //AR button
-    Const button = ARButton.createButton(renderer, {
+    const button = ARButton.createButton(renderer, {
       requiredFeatures: ["image-tracking"], 
       trackedImages: [
         {
@@ -61,7 +61,7 @@ async function init() {
     puffMarkerMesh.name = "Puff3DObject";
     puffMarkerMesh.matrixAutoUpdate = false;
     puffMarkerMesh.visible = false;
-    scene.add(puffMarkerMesh):
+    scene.add(puffMarkerMesh);
 }
 
 function render(timestamp, frame) {
@@ -92,7 +92,19 @@ function render(timestamp, frame) {
           console.log("puff image target found", puffMarkerMesh.position);
         }
       }
+      else if (state == "emulated"){
+        //commenting out unless debugging to not spam console
+        //console.log ("image target no longer seen");
+      }
 
     }
   }
+
+  renderer.render(scene, camera);
 }
+
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
